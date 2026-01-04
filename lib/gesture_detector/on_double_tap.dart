@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Center(
         child: GestureDetector(
-          
           onDoubleTap: () {
             debugPrint("Work onDoubleTap\n");
           },

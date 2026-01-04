@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
-    );
-  }
-}
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -28,20 +13,26 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Center(
         child: GestureDetector(
-          
-          onDoubleTap: () {
-            debugPrint("Work onDoubleTap\n");
+          onTap: () {
+            debugPrint("Work onTap\n");
           },
-          onDoubleTapCancel: () {
-            debugPrint("Work onDoubleTapCancel\n");
+          onTapCancel: () {
+            debugPrint("Work onTapCancel\n");
           },
-          onDoubleTapDown: (TapDownDetails details) {
-            debugPrint("Work onDoubleTapDown");
+          onTapDown: (TapDownDetails details) {
+            debugPrint("Work onTapDown");
             debugPrint("Name: ${details.kind?.name}");
             debugPrint("Global Position: ${details.globalPosition}");
             debugPrint("Local Position: ${details.localPosition}\n");
 
           },
+          onTapUp: (TapUpDetails details) {
+            debugPrint("Work onTapUp");
+            debugPrint("Name: ${details.kind.name}");
+            debugPrint("Global Position: ${details.globalPosition}");
+            debugPrint("Local Position: ${details.localPosition}\n");
+          },
+          // The custom button
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
