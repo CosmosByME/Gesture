@@ -9,9 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
-    );
+    return const MaterialApp(home: HomeScreen());
   }
 }
 
@@ -23,32 +21,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Offset _offset = Offset.zero;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Translate')),
       body: Center(
         child: GestureDetector(
-          
-          onDoubleTap: () {
-            debugPrint("Work onDoubleTap\n");
+          onPanUpdate: (details) {
+            setState(() {
+              _offset = _offset + details.delta;  // This accumulates properly
+            });
           },
-          onDoubleTapCancel: () {
-            debugPrint("Work onDoubleTapCancel\n");
-          },
-          onDoubleTapDown: (TapDownDetails details) {
-            debugPrint("Work onDoubleTapDown");
-            debugPrint("Name: ${details.kind?.name}");
-            debugPrint("Global Position: ${details.globalPosition}");
-            debugPrint("Local Position: ${details.localPosition}\n");
-
-          },
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.lightBlue,
-              borderRadius: BorderRadius.circular(8),
+          child: Transform(
+            transform: Matrix4.identity()..translateByDouble(_offset.dx, _offset.dy, 0, 1)..scaleByDouble(0.1, 0.1, 1, 1),
+            child: Container(
+              width: 900,
+              height: 900,
+              color: Colors.blue,
+              alignment: Alignment.center,
+              child: Text(
+                "Drag Me!",
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: Colors.white),
+              ),
             ),
-            child: const Text('My Button', style: TextStyle(color: Colors.white),),
           ),
         ),
       ),
